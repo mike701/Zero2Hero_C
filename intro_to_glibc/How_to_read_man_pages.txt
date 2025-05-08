@@ -1,0 +1,4 @@
+man malloc
+Beyond a description of the command we also see other functions that are related
+Description is importtant because it shows what the code is doing or attempting to do
+

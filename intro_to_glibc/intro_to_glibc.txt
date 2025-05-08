@@ -1,0 +1,13 @@
+How glibc interfaces with our programs
+ldd ./output_c_program
+    linux-vdso.so.1 (0x00007ffda4f55000)
+    libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f6c21ae7000)
+    /lib64/ld-linux-x86-64.so.2 (0x00007f6c21d25000)
+if we do file ./output we fimd we have an ELF file Executable and linkable format
+    pointers: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, 
+    BuildID[sha1]=e909d7cbc3917ba451eae509ba34a932b57525cc, for GNU/Linux 3.2.0, with debug_info, not stripped
+Th interpreter from the response of the file cmd shows the linux loader that the program relies on
+it is also what ldd (loader diagnostics cmd uses)
+
+This is how we get functions like printf and malloc because they were written in the general lib c file that we link to and include in our programs 
+such that our programs can reference and use the functions without creating our own
