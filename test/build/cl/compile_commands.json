@@ -1,0 +1,20 @@
+[
+{
+  "directory": "C:/Users/micha/Projects/LowLevelAcademy/memoryAllocation/build/cl",
+  "command": "C:\\PROGRA~1\\MICROS~2\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\cl.exe  /nologo -DCMAKE_INTDIR=\\\"Debug\\\" /DWIN32 /D_WINDOWS /Ob0 /Od /RTC1 -MDd -Zi /FoCMakeFiles\\myprogram.dir\\Debug\\main.c.obj /FdCMakeFiles\\myprogram.dir\\Debug\\ /FS -c C:\\Users\\micha\\Projects\\LowLevelAcademy\\memoryAllocation\\main.c",
+  "file": "C:\\Users\\micha\\Projects\\LowLevelAcademy\\memoryAllocation\\main.c",
+  "output": "CMakeFiles\\myprogram.dir\\Debug\\main.c.obj"
+},
+{
+  "directory": "C:/Users/micha/Projects/LowLevelAcademy/memoryAllocation/build/cl",
+  "command": "C:\\PROGRA~1\\MICROS~2\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\cl.exe  /nologo -DCMAKE_INTDIR=\\\"Release\\\" /DWIN32 /D_WINDOWS /O2 /Ob2 /DNDEBUG -MD /FoCMakeFiles\\myprogram.dir\\Release\\main.c.obj /FdCMakeFiles\\myprogram.dir\\Release\\ /FS -c C:\\Users\\micha\\Projects\\LowLevelAcademy\\memoryAllocation\\main.c",
+  "file": "C:\\Users\\micha\\Projects\\LowLevelAcademy\\memoryAllocation\\main.c",
+  "output": "CMakeFiles\\myprogram.dir\\Release\\main.c.obj"
+},
+{
+  "directory": "C:/Users/micha/Projects/LowLevelAcademy/memoryAllocation/build/cl",
+  "command": "C:\\PROGRA~1\\MICROS~2\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1443~1.348\\bin\\Hostx64\\x64\\cl.exe  /nologo -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" /DWIN32 /D_WINDOWS /O2 /Ob1 /DNDEBUG -MD -Zi /FoCMakeFiles\\myprogram.dir\\RelWithDebInfo\\main.c.obj /FdCMakeFiles\\myprogram.dir\\RelWithDebInfo\\ /FS -c C:\\Users\\micha\\Projects\\LowLevelAcademy\\memoryAllocation\\main.c",
+  "file": "C:\\Users\\micha\\Projects\\LowLevelAcademy\\memoryAllocation\\main.c",
+  "output": "CMakeFiles\\myprogram.dir\\RelWithDebInfo\\main.c.obj"
+}
+]

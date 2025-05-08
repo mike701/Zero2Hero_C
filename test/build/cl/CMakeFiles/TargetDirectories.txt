@@ -1,0 +1,3 @@
+C:/Users/micha/Projects/LowLevelAcademy/memoryAllocation/build/cl/CMakeFiles/myprogram.dir
+C:/Users/micha/Projects/LowLevelAcademy/memoryAllocation/build/cl/CMakeFiles/edit_cache.dir
+C:/Users/micha/Projects/LowLevelAcademy/memoryAllocation/build/cl/CMakeFiles/rebuild_cache.dir
