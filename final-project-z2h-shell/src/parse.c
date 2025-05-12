@@ -10,9 +10,28 @@
 #include "common.h"
 #include "parse.h"
 
+void remove_employees(struct dbheader_t *dbhdr, struct employee_t *employees, struct employee_t **employeesOut, char *employee) {
+    int newcount = dbhdr->count;
+    int i = 0;
+    struct employee_t *newemployees = calloc(newcount--, sizeof(struct employee_t));
+    for(; i < dbhdr->count; i++){
+        if(employee == employees[i].name){
+            printf("Removing %s\n", employee);
+        } else {
+            strncpy(newemployees[i].name, employees[i].name,sizeof(employees[i].name));
+            strncpy(newemployees[i].address, employees[i].address,sizeof(employees[i].address));
+            newemployees[i].hours = employees[i].hours;
+        }
+    }
+    *employeesOut = newemployees;
+    // free(newemployees);
+    // newemployees = NULL;
+    return;
+}
+
 void list_employees(struct dbheader_t *dbhdr, struct employee_t *employees) {
     int i = 0;
-    for(; i<dbhdr->count; i++){
+    for(; i < dbhdr->count; i++){
         printf("Employee %d\n", i);
         printf("\tName: %s\n", employees[i].name);
         printf("\tAddress: %s\n", employees[i].address);
@@ -95,7 +114,7 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
         return STATUS_ERROR;
     }
 
-    struct dbheader_t * header = calloc(1, sizeof(struct dbheader_t));
+    struct dbheader_t *header = calloc(1, sizeof(struct dbheader_t));
     if(header == -1){
         printf("Malloc failed to create a db header\n");
         return STATUS_ERROR;
@@ -128,7 +147,7 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
     struct stat dbstat = {0};
     fstat(fd, &dbstat);
     if(header->filesize != dbstat.st_size){
-        printf("Corrupted database\n");
+        printf("Corrupted database %d, %d\n", header->filesize, dbstat.st_size);
         free(header);
         return -1;
     }
