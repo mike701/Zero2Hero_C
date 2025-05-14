@@ -96,8 +96,10 @@ int main(int argc, char *argv[]) {
     }
     
     if(removestring){
-        remove_employees(dbhdr, employees, removestring);
         dbhdr->count--;
+        remove_employees(dbfd, dbhdr, employees, removestring);
+        printf("new Count: %d\n", dbhdr->count);
+        employees = realloc(employees, dbhdr->count * (sizeof(struct employee_t)));
     }
 
     if(list){

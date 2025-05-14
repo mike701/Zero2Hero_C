@@ -11,11 +11,12 @@
 #include "common.h"
 #include "parse.h"
 
-void remove_employees(struct dbheader_t *dbhdr, struct employee_t *employees, char *employee) {
+int remove_employees(int fd, struct dbheader_t *dbhdr, struct employee_t *employees, char *employee) {
     bool foundemployee = false;
     int i = 0;
     char *employeename = strtok(employee, ",");
-    for(; i < dbhdr->count+1; i++){
+    int realCount = dbhdr->count;
+    for(; i < realCount; i++){
         
         if(strcmp(employeename, employees[i].name) == 0){
             printf("Removing %s\n", employee);
@@ -29,8 +30,14 @@ void remove_employees(struct dbheader_t *dbhdr, struct employee_t *employees, ch
         }
     }
     i = 0;
-    for(; i < dbhdr->count+1; i++){
+    for(; i < realCount; i++){
         printf("%s\n", employees[i].name);
+    }
+
+    if (ftruncate(fd, sizeof(struct dbheader_t) + (sizeof(struct employee_t)*realCount)) == -1) {
+        perror("ftruncate");
+        close(fd);
+        return STATUS_ERROR;
     }
     return;
 }
@@ -94,10 +101,10 @@ void output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
         return STATUS_ERROR;
     }
     int realcount = dbhdr->count;
-    printf("realCount: %d\n", realcount);
-
+    printf("realCount Output: %d, %d\n", realcount, sizeof(struct dbheader_t) + (sizeof(struct employee_t)*realcount));
+    
     dbhdr->magic = htonl(dbhdr->magic);
-    dbhdr->filesize = htonl(sizeof(struct dbheader_t) + (sizeof(struct employee_t)*realcount));
+    dbhdr->filesize = htonl(sizeof(struct dbheader_t) + (sizeof(struct employee_t)*(realcount)));
     dbhdr->count = htons(dbhdr->count);
     dbhdr->version = htons(dbhdr->version);
 
@@ -105,7 +112,7 @@ void output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
 
     write(fd, dbhdr, sizeof(struct dbheader_t));
 
-    int i =0;
+    int i = 0;
     for(; i < realcount; i++){
         employees[i].hours = htonl(employees[i].hours);
         write(fd, &employees[i], sizeof(struct employee_t));
@@ -152,8 +159,9 @@ int validate_db_header(int fd, struct dbheader_t **headerOut) {
 
     struct stat dbstat = {0};
     fstat(fd, &dbstat);
+    // printf("database filesize %d, %d\n", header->filesize, dbstat.st_size);
     if(header->filesize != dbstat.st_size){
-        printf("Corrupted database %d, %d\n", header->filesize, dbstat.st_size);
+        printf("Corrupted database %d\n", header->filesize);// dbstat.st_size);
         free(header);
         return -1;
     }

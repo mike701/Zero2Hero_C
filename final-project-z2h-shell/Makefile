@@ -11,7 +11,13 @@ run: clean default
 	./$(TARGET) -f ./mynewdb.db -a "Timmy H.,123 Sheshire Ln.,120"
 	./bin/dbview -f ./mynewdb.db -a "Kenny G.,444 Walloby Way,140"
 	./bin/dbview -f ./mynewdb.db -l
-	./$(TARGET) -f ./mynewdb.db -r "Timmy H."
+	./bin/dbview -f ./mynewdb.db -a "Kenny G.,444 Walloby Way,140"
+	./bin/dbview -f ./mynewdb.db -l
+	./bin/dbview -f ./mynewdb.db -a "Kenny G.,444 Walloby Way,140"
+	./bin/dbview -f ./mynewdb.db -l
+	./bin/dbview -f ./mynewdb.db -r "Timmy H."
+	./bin/dbview -f ./mynewdb.db -l
+	./bin/dbview -f ./mynewdb.db -a "Kenny G.,444 Walloby Way,140"
 	./bin/dbview -f ./mynewdb.db -l
 
 default: $(TARGET)
