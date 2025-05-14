@@ -6,26 +6,32 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "common.h"
 #include "parse.h"
 
-void remove_employees(struct dbheader_t *dbhdr, struct employee_t *employees, struct employee_t **employeesOut, char *employee) {
-    int newcount = dbhdr->count;
+void remove_employees(struct dbheader_t *dbhdr, struct employee_t *employees, char *employee) {
+    bool foundemployee = false;
     int i = 0;
-    struct employee_t *newemployees = calloc(newcount--, sizeof(struct employee_t));
-    for(; i < dbhdr->count; i++){
-        if(employee == employees[i].name){
+    char *employeename = strtok(employee, ",");
+    for(; i < dbhdr->count+1; i++){
+        
+        if(strcmp(employeename, employees[i].name) == 0){
             printf("Removing %s\n", employee);
+            foundemployee = true;
+        } 
+        
+        if(!foundemployee){
+            employees[i] = employees[i];
         } else {
-            strncpy(newemployees[i].name, employees[i].name,sizeof(employees[i].name));
-            strncpy(newemployees[i].address, employees[i].address,sizeof(employees[i].address));
-            newemployees[i].hours = employees[i].hours;
+            employees[i] = employees[i+1];
         }
     }
-    *employeesOut = newemployees;
-    // free(newemployees);
-    // newemployees = NULL;
+    i = 0;
+    for(; i < dbhdr->count+1; i++){
+        printf("%s\n", employees[i].name);
+    }
     return;
 }
 
@@ -45,9 +51,8 @@ int add_employee(struct dbheader_t *dbhdr, struct employee_t *employees, char *a
     char *addr = strtok(NULL, ",");
     char *hours = strtok(NULL, ",");
 
-
-    strncpy(employees[dbhdr->count-1].name, name,sizeof(employees[dbhdr->count-1].name));
-    strncpy(employees[dbhdr->count-1].address, addr,sizeof(employees[dbhdr->count-1].address));
+    strncpy(employees[dbhdr->count-1].name, name, sizeof(employees[dbhdr->count-1].name));
+    strncpy(employees[dbhdr->count-1].address, addr, sizeof(employees[dbhdr->count-1].address));
     employees[dbhdr->count-1].hours = atoi(hours);
 
     return STATUS_SUCCESS;
@@ -89,6 +94,7 @@ void output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
         return STATUS_ERROR;
     }
     int realcount = dbhdr->count;
+    printf("realCount: %d\n", realcount);
 
     dbhdr->magic = htonl(dbhdr->magic);
     dbhdr->filesize = htonl(sizeof(struct dbheader_t) + (sizeof(struct employee_t)*realcount));
